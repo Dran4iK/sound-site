@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sound Share</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 50px; }
+        button { padding: 12px 24px; font-size: 16px; margin-top: 10px; }
+        #link { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>🔊 Загрузи звук</h1>
+    <input type="file" id="audioFile" accept="audio/*">
+    <button id="btn">Получить ссылку</button>
+    <div id="link"></div>
+
+    <script>
+        document.getElementById("btn").addEventListener("click", function() {
+            const file = document.getElementById("audioFile").files[0];
+            if (!file) {
+                alert("Сначала выбери файл!");
+                return;
+            }
+            
+            const audioURL = URL.createObjectURL(file);
+            const randomID = "id_" + Math.random().toString(36).substring(2, 9);
+            localStorage.setItem(randomID, audioURL);
+            
+            document.getElementById("link").innerHTML = 
+                <a href="play.html?id=${randomID}">play.html?id=${randomID}</a>
+                <p>Откройте эту ссылку в ЭТОМ ЖЕ браузере</p>
+            ;
+        });
+    </script>
+</body>
+</html>
